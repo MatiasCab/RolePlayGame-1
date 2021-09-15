@@ -1,18 +1,21 @@
 using System;
 using System.Collections;
+using System.Text;
 
 namespace Roleplay
 {
     public class Wizard
     {
-        private int ataque;
-        private int defensa;
-        private int mana;
-        private int vida;
-        private ArrayList inventario;
+        private string name;
+        private double ataque;
+        private double defensa;
+        private double mana;
+        private double vida;
+        private ArrayList inventario = new ArrayList{};
 
-        public Wizard(int vida, int ataque, int defensa, int mana, ArrayList inventario )
+        public Wizard(string name, double vida, double ataque, double defensa, double mana, ArrayList inventario)
         {
+            this.Name = name;
             this.Vida = vida;
             this.Ataque = ataque;
             this.Defensa = defensa;
@@ -20,7 +23,19 @@ namespace Roleplay
             this.Inventario = inventario;
         }
 
-        public int Vida
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                this.name = value;
+            }
+        }
+
+        public double Vida
         {
             get
             {
@@ -32,7 +47,7 @@ namespace Roleplay
             }
         }
 
-        public int Ataque
+        public double Ataque
         {
             get
             {
@@ -44,7 +59,7 @@ namespace Roleplay
             }
         }
         
-        public int Defensa
+        public double Defensa
         {
             get
             {
@@ -56,7 +71,7 @@ namespace Roleplay
             }
         }
 
-        public int Mana
+        public double Mana
         {
             get
             {
@@ -76,8 +91,40 @@ namespace Roleplay
             }
             set
             {
-                this.inventario = value;
+                foreach (InventoryElements item in Inventory.WizardInventory)
+                {
+                    foreach (string element in value)
+                    {
+                        if (item.Name == element)
+                        {
+                            this.inventario.Add(item);
+                            this.Ataque = this.Ataque + item.Ataque;
+                            this.Defensa = this.Defensa + item.Defensa;
+                            this.Mana = this.Mana + item.Mana;
+                        }
+                    }
+                }
             }
         }
-    }   
+
+        public string GetStatus()
+        {
+            StringBuilder equipament= new StringBuilder();
+            foreach (InventoryElements item in this.Inventario)
+            {
+                equipament.Append(item.Name+"("+item.Tipo+")"+"\n           ");
+            }
+            return $"Clase:Wizard\nNombre:{this.Name}\nVida:{this.Vida}\nAtaque:{this.Ataque}\nDefensa:{this.Defensa}\nMana:{this.Mana}\nInventario:{equipament}";
+        }
+
+        public StringBuilder GetInventarySpecifications()
+        {
+            StringBuilder inventario= new StringBuilder();
+            foreach (InventoryElements item in this.Inventario)
+            {
+                inventario.Append($"\nNombre:{item.Name}\nTipo:{item.Tipo}\nAtaque:{item.Ataque}\nDefensa:{item.Defensa}\nMana:{item.Mana}\n\n{item.Descripcion}\n");
+            }
+            return inventario;
+        }
+}
 }
