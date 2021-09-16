@@ -92,7 +92,7 @@ namespace Program
 
         public void AddItem(Item item)
         {
-            if(item.Restriction.Equals(this.ID) || item.Restriction.Equals(" "))
+            if(item.Restriction.Equals(this.ID) || item.Restriction.Equals(""))
             {
                 this.Inventory.Add(item);
                 Console.WriteLine($"{this.Name} agarró el objeto {item.Name}");
@@ -114,19 +114,65 @@ namespace Program
             }
         }
 
+        public double AttackStat()
+        {
+            double attackDamage = this.Strength;
+            foreach (Item item in this.Inventory)
+            {
+                attackDamage += item.AttackStat;
+            }
+            return attackDamage;
+        }
+
+        public double DefenseStat()
+        {
+            double defense = this.Defense;
+            foreach (Item item in this.Inventory)
+            {
+                defense += item.DefenseStat;
+            }
+            return defense;
+        }
+
         public string ShowStats()
         {
             StringBuilder stringBuilder = new StringBuilder($"El personaje {this.Name} tiene:\n");
-            double attack = 0;
-            double defense = 0;
-            foreach (Item item in this.Inventory)
-            {
-                attack += item.AttackStat;
-                defense += item.DefenseStat;
-            }
-            stringBuilder.Append($"{attack} de ataque\n");
-            stringBuilder.Append($"{defense} de defensa");
+            stringBuilder.Append($"{AttackStat()} de ataque\n");
+            stringBuilder.Append($"{DefenseStat()} de defensa");
             return stringBuilder.ToString();
+        }
+
+        public void Attack(Enemy enemy)
+        {
+            if(enemy.Alive)
+            {
+                double dmg = 0;
+                if(this.AttackStat() >= enemy.Defense)
+                {
+                    dmg = this.AttackStat() - enemy.Defense;
+                }
+                if(dmg < enemy.Health)
+                {
+                    enemy.Health -= dmg;
+                }
+                else
+                {
+                    enemy.Health = 0;
+                    enemy.Alive = false;
+                }
+                if(enemy.Alive)
+                {
+                    Console.WriteLine($"El enemigo sufrio {dmg} de daño, vida restante {enemy.Health}");
+                }
+                else
+                {
+                    Console.WriteLine($"El enemigo sufrio {dmg} de daño y murió, RIP");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ese enemigo ya está muerto");
+            }
         }
     }
 }

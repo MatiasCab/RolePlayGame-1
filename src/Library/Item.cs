@@ -9,12 +9,19 @@ namespace Program
         private double defenseStat;
         private string restriction;
 
-        public Item(string name, double attackStat, double defenseStat)
+        public Item(string name, double attackStat, double defenseStat, string restriction)
         {
             this.Name = name;
             this.AttackStat = attackStat;
             this.DefenseStat = defenseStat;
-            this.Restriction = " ";
+            if(restriction.Equals(""))
+            {
+                this.Restriction = "";
+            }
+            else
+            {
+                this.Restriction =  restriction;
+            }
         }
 
         public string Name
