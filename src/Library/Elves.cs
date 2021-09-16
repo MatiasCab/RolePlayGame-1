@@ -1,10 +1,10 @@
 using System;
-using System.Text;
 using System.Collections;
+using System.Text;
 
 namespace Program
 {
-    public class Dwarf
+    public class Elves
     {
         private string id;
         private string name;
@@ -13,22 +13,14 @@ namespace Program
         private double health;
         private ArrayList inventory;
 
-        public Dwarf(string name, double strength, double defense, double health)
+        public Elves(string name, double strength, double defense, double health)
         {
-            this.id = "Dwarf";
+            this.id="Elves";
             this.Name = name;
+            this.Health = health;
             this.Strength = strength;
             this.Defense = defense;
-            this.Health = health;
-            this.inventory = new ArrayList();
-        }
-
-        public string ID
-        {
-            get
-            {
-                return this.id;
-            }
+            this.Inventory = new ArrayList();
         }
 
         public string Name
@@ -39,30 +31,7 @@ namespace Program
             }
             set
             {
-                this.name=value;
-            }
-        }
-        public double Strength
-        {
-            get
-            {
-                return this.strength;
-            }
-            set
-            {
-                this.strength=value;
-            }
-        }
-
-        public double Defense
-        {
-            get
-            {
-                return this.defense;
-            }
-            set
-            {
-                this.defense=value;
+                this.name = value;
             }
         }
 
@@ -74,10 +43,41 @@ namespace Program
             }
             set
             {
-                this.health=value;
+                this.health = value;
             }
         }
 
+        public double Strength
+        {
+            get
+            {
+                return this.strength;
+            }
+            set
+            {
+                this.strength = value;
+            }
+        }
+        
+        public double Defense
+        {
+            get
+            {
+                return this.defense;
+            }
+            set
+            {
+                this.defense = value;
+            }
+        }
+
+        public string ID
+        {
+            get
+            {
+                return this.id;
+            }
+        }
         public ArrayList Inventory
         {
             get
@@ -135,15 +135,27 @@ namespace Program
 
         public void ReciveDamage(double damage )
         {
-            if (this.Health>damage)
+            if (this.Health+this.defense>=damage)
             {
-            this.Health -= (damage);
+            this.Health -= (damage-this.defense);
             }
             else
             {
                 this.Health = 0;
-                Console.WriteLine($"{this.Name} esta muerto");
+            }
+            Console.WriteLine($"{this.Name} esta muerto");
+        }
+
+        public void CureCharacter(dynamic personaje)
+        {
+            if (personaje.Health>0)
+            {
+            personaje.Health += (this.Health*0.30);
+            }
+            else 
+            {
+                Console.WriteLine("El personaje esta muerto");
             }
         }
-    }
+}
 }
