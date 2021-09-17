@@ -4,6 +4,8 @@ using System.Collections;
 
 namespace Program
 {
+    /*Se hizo una clase spellbook, para el item del libro de hechizos,ya que este es un item especial que posee nuevas mecanicas y 
+    caracteristicas*/
     public class SpellBook
     {
         private string name;
@@ -73,6 +75,10 @@ namespace Program
             {
                 return this.Restriction;
             }
+            set 
+            {
+                this.restriction=value;
+            }
         }
 
         public ArrayList Spells
@@ -87,25 +93,30 @@ namespace Program
             }
         }
 
-        public void AddSpells(string spell)
+        public void AddSpells(Spells spell)
         {
             this.Spells.Add(spell);
+            this.AttackStat += spell.AttackStat;
+            this.DefenseStat += spell.DefenseStat;
+
         }
 
-        public void RemoveSpells(string spell)
+        public void RemoveSpells(Spells spell)
         {
             foreach (var item in this.spells)
             {
                 if (spell.Equals(item))
                 {
                     this.spells.Remove(item);
+                    this.AttackStat -= spell.AttackStat;
+                    this.DefenseStat -= spell.DefenseStat;
                 }
             }
         }
-        public double NumberOfSpells()
+        public int NumberOfSpells()
         {
-            double hechizos = 0;
-            foreach (var item in this.Spells)
+            int hechizos = 0;
+            foreach (Spells item in this.Spells)
             {
                 hechizos++;
             }

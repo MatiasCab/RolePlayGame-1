@@ -19,7 +19,7 @@ namespace Program
             this.id = "Wizard";
             this.Name = name;
             this.Strength = strength;
-            this.Defense = mdefense;
+            this.Defense = defense;
             this.Health = health;
             this.inventory = new ArrayList();
         }
@@ -108,6 +108,13 @@ namespace Program
             {
                 this.Inventory.Add(item);
                 Console.WriteLine($"{this.Name} agarró el objeto {item.Name}");
+                if (item.GetType==Type.GetType("Object.SpellBook"))
+                {
+                    this.Strength *= item.NumberOfSpells();
+                    this.Defense *= item.NumberOfSpells();
+                }
+                this.Strength += item.attackStat;
+                this.Defense += item.DefenseStat;
             }
             else
             {
@@ -115,18 +122,26 @@ namespace Program
             }
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(dynamic item)
         {
-            foreach (Item i in this.Inventory)
+            foreach (dynamic i in this.Inventory)
             {
                 if(i.Equals(item))
                 {
-                    this.Inventory.Remove(i);
+                this.Inventory.Remove(i);
+                this.Strength -= item.attackStat;
+                this.Defense -= item.DefenseStat;
+                if (item.GetType==Type.GetType("Object.SpellBook"))
+                {
+                    this.Strength /= item.NumberOfSpells();
+                    this.Defense /= item.NumberOfSpells();
+                }
                 }
             }
         }
+        
 
-        public double AttackStat()
+        public double AttackStat()  // Aca obtengo el ataque total del mago(el base mas lo que aporta los items), para esto se siguio el patron expert(el mago es el que tiene toda la informacion) 
         {
             double attackDamage = this.Strength;
             foreach (Item item in this.Inventory)
@@ -136,9 +151,9 @@ namespace Program
             return attackDamage;
         }
 
-        public double DefenseStat()
+        public double DefenseStat()// Aca obtengo la defensa total del mago(el base mas lo que aporta los items), por el mismo patron
         {
-            double defense = this.Defense;
+            double defense = this.Defense; 
             foreach (Item item in this.Inventory)
             {
                 defense += item.DefenseStat;
@@ -146,7 +161,7 @@ namespace Program
             return defense;
         }
 
-        public string ShowStats()
+        public string ShowStats()//Se arma un texto con los stats de defensa y ataque del mago(se sigui el patron expert, el mago es el que conoce esta informacion)
         {
             StringBuilder stringBuilder = new StringBuilder($"El personaje {this.Name} tiene:\n");
             stringBuilder.Append($"{AttackStat()} de ataque\n");
@@ -154,9 +169,13 @@ namespace Program
             return stringBuilder.ToString();
         }
 
+/* Metodo para atacar a un enemigo, como es el mago el que conoce todas las caracteristicas necesarioas para atacar
+el es el responsable de hacer la accion de atacr, ademas, si se le quieren agregar mas caracteristicas a su modo de 
+ataque, solo se tendria que modificar esta parte del codigo */
+
         public void Attack(Enemy enemy)
         {
-            if(enemy.Health)
+            if(enemy.Health > 0)
             {
                 double dmg = 0;
                 if(this.AttackStat() >= enemy.Defense)

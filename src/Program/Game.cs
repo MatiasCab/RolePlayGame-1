@@ -8,6 +8,7 @@ namespace Program
     public class Game
     {
         Dwarf enano;
+        Wizard mago;
         ArrayList enemies;
         int players;
 
@@ -101,7 +102,7 @@ namespace Program
         private void CreateChar()
         {
             Console.WriteLine("Seleccione raza");
-            Console.WriteLine("1 - Enano");
+            Console.WriteLine("1 - Enano\n2 - Mago");
 
             int character = Convert.ToInt32(Console.ReadLine());
 
@@ -116,6 +117,19 @@ namespace Program
                 Console.WriteLine("Elija la vida");
                 double health = Convert.ToDouble(Console.ReadLine());
                 enano =  new Dwarf(name,strength,defense,health);
+            }else if(character.Equals(2))
+            {
+                Console.WriteLine("Elija un nombre");
+                string name = Console.ReadLine();
+                Console.WriteLine("Elija la fuerza");
+                double strength = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("Elija la defensa");
+                double defense = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("Elija la vida");
+                double health = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("Elija la cantidad de mana");
+                double mana = Convert.ToDouble(Console.ReadLine());
+                mago =  new Wizard(name,strength,defense,health,mana);
             }
         }
 
