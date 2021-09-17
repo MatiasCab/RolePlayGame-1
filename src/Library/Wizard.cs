@@ -102,7 +102,7 @@ namespace Program
             }
         }
 
-        public void AddItem(Item item)
+        public void AddItem(dynamic item)
         {
             if(item.Restriction.Equals(this.ID) || item.Restriction.Equals(""))
             {

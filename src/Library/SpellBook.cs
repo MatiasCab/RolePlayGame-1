@@ -20,6 +20,7 @@ namespace Program
             this.DefenseStat = defenseStat;
             this.Mana = mana;
             this.Spells = new ArrayList();
+            this.Restriction ="Wizard";
         }
 
         public string Name
@@ -100,6 +101,15 @@ namespace Program
                     this.spells.Remove(item);
                 }
             }
+        }
+        public double NumberOfSpells()
+        {
+            double hechizos = 0;
+            foreach (var item in this.Spells)
+            {
+                hechizos++;
+            }
+            return hechizos;
         }
     }
 }
