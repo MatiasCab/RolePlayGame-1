@@ -14,12 +14,12 @@ namespace Program
         private double mana;
         private ArrayList inventory;
 
-        public Dwarf(string name, double strength, double defense, double health, double mana)
+        public Wizard(string name, double strength, double defense, double health, double mana)
         {
             this.id = "Wizard";
             this.Name = name;
             this.Strength = strength;
-            this.Defense = defense;
+            this.Defense = mdefense;
             this.Health = health;
             this.inventory = new ArrayList();
         }
@@ -156,7 +156,7 @@ namespace Program
 
         public void Attack(Enemy enemy)
         {
-            if(enemy.Alive)
+            if(enemy.Health)
             {
                 double dmg = 0;
                 if(this.AttackStat() >= enemy.Defense)
@@ -178,9 +178,8 @@ namespace Program
                 else
                 {
                     enemy.Health = 0;
-                    enemy.Alive = false;
                 }
-                if(enemy.Alive)
+                if(enemy.Health > 0)
                 {
                     Console.WriteLine($"El enemigo sufrio {dmg} de daño, vida restante {enemy.Health}");
                 }
