@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Roleplay
 {
-    public class Paladin
+    public class Dwarf
     {
         private string id;
         private string name;
@@ -13,9 +13,9 @@ namespace Roleplay
         private double health;
         private ArrayList inventory;
 
-        public Paladin(string name, double strength, double defense, double health)
+        public Dwarf(string name, double strength, double defense, double health)
         {
-            this.id = "Paladin";
+            this.id = "Dwarf";
             this.Name = name;
             this.Strength = strength;
             this.Defense = defense;
