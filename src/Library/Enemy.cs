@@ -7,14 +7,12 @@ namespace Program
         private double damage;
         private double defense;
         private double health;
-        private bool alive;
 
         public Enemy()
         {
             this.Damage = 5;
             this.Defense = 5;
             this.Health = 30;
-            this.Alive = true;
         }
 
         public double Damage
@@ -53,17 +51,38 @@ namespace Program
             }
         }
 
-        public bool Alive
+        public void AttackDwarf(Dwarf enano)
         {
-            get
+            if(enano.Health > 0)
             {
-                return this.alive;
+                double dmg = 0;
+                if(this.Damage >= enano.Defense)
+                {
+                    dmg = this.Damage - enano.Defense;
+                }
+                if(dmg < enano.Health)
+                {
+                    enano.Health -= dmg;
+                }
+                else
+                {
+                    enano.Health = 0;
+                }
+                if(enano.Health > 0)
+                {
+                    Console.WriteLine($"{enano.Name} sufrio {dmg} de daño, vida restante {enano.Health}");
+                }
+                else
+                {
+                    Console.WriteLine($"{enano.Name} sufrio {dmg} de daño y murió, RIP");
+                }
             }
-            set
+            else
             {
-                this.alive=value;
+                Console.WriteLine($"{enano.Name} ya está muerto");
             }
         }
+
     }
 
 }

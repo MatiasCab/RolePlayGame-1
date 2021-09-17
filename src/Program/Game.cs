@@ -1,31 +1,31 @@
 using System;
 using System.Collections;
+using System.Threading;
+
 
 namespace Program
 {
     public class Game
     {
-        ArrayList playersInGame;
+        Dwarf enano;
         ArrayList enemies;
+        int players;
 
         public Game()
         {
-            this.playersInGame = new ArrayList();
             CreateEnemies();
-            
         }
         public void Start()
         {
             bool playing = true;
             bool choosing = true;
-            int players;
             
 
             while(choosing)
             {
-                Console.WriteLine("1 - Seleccione la cantidad de jugadores\n");
-                players = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine($"Quiere jugar con {players} personajes? (y/n)\n");
+                Console.WriteLine("1 - Seleccione la cantidad de jugadores");
+                this.Players = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"Quiere jugar con {players} personaje/s? (y/n)");
                 string confirm = Console.ReadLine();
                 if(confirm.Equals("y"))
                 {
@@ -44,8 +44,55 @@ namespace Program
 
             while(playing)
             {
-                Console.WriteLine($"Hay {this.enemies.Count} enemigos");
-                
+                if (this.enemies.Count > 0 && this.Players > 0)
+                {
+                    if (!enano.Equals(null))
+                    {
+                        for (int i = 0; i < this.enemies.Count; i++)
+                        {
+                            int j = i+1;
+                            Thread.Sleep(800);
+                            Console.WriteLine($"{i} - Atacar enemigo numero {j}");
+                        }
+                        int enemySelected = Convert.ToInt32(Console.ReadLine());
+                        Thread.Sleep(1200);
+                        Enemy enemy = (Enemy)this.enemies[enemySelected];
+                        enano.Attack(enemy);
+                        if(enemy.Health <= 0)
+                        {
+                            this.enemies.Remove(enemy);
+                        }
+                    }
+
+                    if (this.enemies.Count > 0)
+                    {
+                        for (int i = 0; i < this.enemies.Count; i++)
+                        {
+                            Thread.Sleep(800);
+                            if (this.Players > 0)
+                            {
+                                Enemy enemy = (Enemy)this.enemies[i];
+                                enemy.AttackDwarf(enano);
+                            }
+                            if(enano.Health <= 0)
+                            {
+                                this.Players -= 1;
+                            }
+                        }
+                    }
+
+                }
+                else if (this.enemies.Count <= 0)
+                {
+                    playing = false;
+                    Console.WriteLine("Ganaste");
+                }
+                else if (this.players <= 0)
+                {
+                    playing = false;
+                    Console.WriteLine("Perdiste xD");
+                }
+
             }
 
 
@@ -54,7 +101,7 @@ namespace Program
         private void CreateChar()
         {
             Console.WriteLine("Seleccione raza");
-            Console.WriteLine("1 - Enano\n");
+            Console.WriteLine("1 - Enano");
 
             int character = Convert.ToInt32(Console.ReadLine());
 
@@ -68,8 +115,7 @@ namespace Program
                 double defense = Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("Elija la vida");
                 double health = Convert.ToDouble(Console.ReadLine());
-                Dwarf enano =  new Dwarf(name,strength,defense,health);
-                this.playersInGame.Add(enano);
+                enano =  new Dwarf(name,strength,defense,health);
             }
         }
 
@@ -80,6 +126,18 @@ namespace Program
             this.enemies = new ArrayList();
             this.enemies.Add(e1);
             this.enemies.Add(e2);
+        }
+
+        public int Players
+        {
+            get
+            {
+                return this.players;
+            }
+            set
+            {
+                this.players=value;
+            }
         }
     }
 }

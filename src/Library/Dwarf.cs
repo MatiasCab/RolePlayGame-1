@@ -144,7 +144,7 @@ namespace Program
 
         public void Attack(Enemy enemy)
         {
-            if(enemy.Alive)
+            if(enemy.Health > 0)
             {
                 double dmg = 0;
                 if(this.AttackStat() >= enemy.Defense)
@@ -158,9 +158,8 @@ namespace Program
                 else
                 {
                     enemy.Health = 0;
-                    enemy.Alive = false;
                 }
-                if(enemy.Alive)
+                if(enemy.Health > 0)
                 {
                     Console.WriteLine($"El enemigo sufrio {dmg} de daño, vida restante {enemy.Health}");
                 }

@@ -8,7 +8,13 @@ namespace Test.Library
     {
 
         [Test]
-        public void dummyTest()
+        public void AddItemTest()
+        {
+            Assert.True(true);
+        }
+
+        [Test]
+        public void AddItemTest()
         {
             Assert.True(true);
         }
