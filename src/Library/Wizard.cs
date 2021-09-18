@@ -108,13 +108,6 @@ namespace Program
             {
                 this.Inventory.Add(item);
                 Console.WriteLine($"{this.Name} agarró el objeto {item.Name}");
-                if (item.GetType==Type.GetType("Object.SpellBook"))
-                {
-                    this.Strength *= item.NumberOfSpells();
-                    this.Defense *= item.NumberOfSpells();
-                }
-                this.Strength += item.attackStat;
-                this.Defense += item.DefenseStat;
             }
             else
             {
@@ -129,13 +122,6 @@ namespace Program
                 if(i.Equals(item))
                 {
                 this.Inventory.Remove(i);
-                this.Strength -= item.attackStat;
-                this.Defense -= item.DefenseStat;
-                if (item.GetType==Type.GetType("Object.SpellBook"))
-                {
-                    this.Strength /= item.NumberOfSpells();
-                    this.Defense /= item.NumberOfSpells();
-                }
                 }
             }
         }
@@ -144,20 +130,30 @@ namespace Program
         public double AttackStat()  // Aca obtengo el ataque total del mago(el base mas lo que aporta los items), para esto se siguio el patron expert(el mago es el que tiene toda la informacion) 
         {
             double attackDamage = this.Strength;
-            foreach (Item item in this.Inventory)
+            foreach (dynamic item in this.Inventory)
             {
-                attackDamage += item.AttackStat;
+                if (item.GetType==Type.GetType("Object.SpellBook"))
+                {
+                    int spells=item.NumberOfSpells();
+                }
+                    attackDamage += item.AttackStat;
             }
+            attackDamage *=spells;
             return attackDamage;
         }
 
         public double DefenseStat()// Aca obtengo la defensa total del mago(el base mas lo que aporta los items), por el mismo patron
         {
             double defense = this.Defense; 
-            foreach (Item item in this.Inventory)
+            foreach (dynamic item in this.Inventory)
             {
+                if (item.GetType==Type.GetType("Object.SpellBook"))
+                {
+                    int spells=item.NumberOfSpells();
+                }
                 defense += item.DefenseStat;
             }
+            defense *= spelss;
             return defense;
         }
 
