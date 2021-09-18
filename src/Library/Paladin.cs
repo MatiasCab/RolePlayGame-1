@@ -20,7 +20,6 @@ namespace Roleplay
             this.Strength = strength;
             this.Defense = defense;
             this.Health = health;
-            this.MaxHealth = health;
             this.inventory = new ArrayList();
         }
 

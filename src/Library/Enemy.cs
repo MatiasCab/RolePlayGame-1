@@ -11,9 +11,9 @@ namespace Roleplay
 
         public Enemy()
         {
-            this.Damage = 45;
-            this.Defense = 25;
-            this.Health = 50;
+            this.Damage = 75;
+            this.Defense = 35;
+            this.Health = 200;
             this.Alive = true;
         }
 
@@ -98,6 +98,39 @@ namespace Roleplay
         }
 
         public void AttackPaladin(Paladin personaje)
+        {
+            if(personaje.Health > 0)
+            {
+                double dmg = 0;
+                if(this.Damage >= personaje.Defense)
+                {
+                    dmg = this.Damage - personaje.Defense;
+                }
+                if(dmg < personaje.Health)
+                {
+                    personaje.Health -= dmg;
+                }
+                else
+                {
+                    personaje.Health = 0;
+                }
+                if(personaje.Health > 0)
+                {
+                    Console.WriteLine($"{personaje.Name} sufrio {dmg} de daño, vida restante {personaje.Health}");
+                }
+                else
+                {
+                    Console.WriteLine($"{personaje.Name} sufrio {dmg} de daño y murió, RIP");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{personaje.Name} ya está muerto");
+            }
+        }
+    
+
+        public void AttackElf(Elf personaje)
         {
             if(personaje.Health > 0)
             {

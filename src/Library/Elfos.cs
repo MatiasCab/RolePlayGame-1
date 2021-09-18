@@ -5,102 +5,104 @@ using System.Text;
 
 namespace Roleplay
 {
-    public class Elfos 
+    public class Elf
     {
-        private string id; 
-        private string name; 
-        private double health;
+        private string id;
+        private string name;
+        private double strength;
+        private double defense;
         private double MaxHealth;
-        private double defense; 
-        private double attack;
-        private ArrayList inventory; 
+        private double health;
+        private ArrayList inventory;
 
-        public Elfos(string name, double health, double defense, double attack)
+        public Elf(string name, double strength, double defense, double health)
         {
-            this.id= "Elfos"; 
-            this.Name= name; 
-            this.Health= health; 
+            this.id = "Elf";
+            this.Name = name;
+            this.Strength = strength;
+            this.Defense = defense;
             this.MaxHealth = health;
-            this.Defense= defense; 
-            this.Attack= attack; 
-            this.Inventory= new ArrayList(); 
-            
+            this.Health = health;
+            this.inventory = new ArrayList();
         }
-        public string ID 
+
+        public string ID
         {
-            get 
+            get
             {
-                return this.id; 
+                return this.id;
             }
         }
+
         public string Name
         {
             get
             {
-                return this.name; 
+                return this.name;
             }
-            set 
+            set
             {
-             this.name = value;    
+                this.name=value;
             }
         }
-        public int Health
+        public double Strength
         {
             get
             {
-                return this.health; 
+                return this.strength;
             }
-            set 
+            set
             {
-                this.health = value; 
+                this.strength=value;
             }
         }
-        public int Defense
+
+        public double Defense
         {
             get
             {
-                return this.defense; 
+                return this.defense;
             }
-            set 
+            set
             {
-                this.defense= value; 
+                this.defense=value;
             }
         }
-       
-        public int Attack
+
+        public double Health
         {
             get
             {
-                return this.attack; 
+                return this.health;
             }
-            set 
+            set
             {
-                this.attack= value; 
+                this.health=value;
             }
         }
+
         public ArrayList Inventory
         {
             get
             {
-                return this.inventory; 
+                return this.inventory;
             }
             set
             {
-                this.inventory = value; 
+                this.inventory=value;
             }
         }
+
         public void AddItem(Item item)
         {
-            if(item.Restriction.Equeals(this.ID)|| item.Restiction.Equals(""))
+            if(item.Restriction.Equals(this.ID) || item.Restriction.Equals(""))
             {
-                this.Inventory.Add(item); 
-                Console.WriteLine(${this.Name} agarro el objeto {item.Name});
+                this.Inventory.Add(item);
+                Console.WriteLine($"{this.Name} agarró el objeto {item.Name}");
             }
             else
             {
-                
-                Cosole.WriteLine(${this.Name} no cumple con los requisitos de clase de {item.Name});
-                
+                Console.WriteLine($"{this.Name} no cumple con los requisitos de clase de {item.Name}");
             }
         }
 
@@ -110,42 +112,47 @@ namespace Roleplay
             {
                 if(i.Equals(item))
                 {
-                    this.Inventory.Remove(i); 
+                    this.Inventory.Remove(i);
                 }
             }
         }
-        public double DefenseStat()
-        {
-            double defense=this.Defense; 
-            foreach (Item item in this.Inventory)
-            {
-                defense += item.DefenseStat; 
-            }
-            return defense; 
-        }
+
         public double AttackStat()
         {
-            double attackDamage = this.attack; 
-            foreach(Item item in this.Inventory)
+            double attackDamage = this.Strength;
+            foreach (Item item in this.Inventory)
             {
-                attackDamage += itemAttackStat; 
+                attackDamage += item.AttackStat;
             }
-            return attackDamage; 
+            return attackDamage;
         }
+
+        public double DefenseStat()
+        {
+            double defense = this.Defense;
+            foreach (Item item in this.Inventory)
+            {
+                defense += item.DefenseStat;
+            }
+            return defense;
+        }
+
         public string ShowStats()
         {
-            StringBuilder stringBuilder = new StringBuilder ($"El personaje {this.Name} tiene \n"); 
-            stringBuilder.Append($"{DefenseStat()} de defensa\n"); 
-            return stringBuilder.ToString(); 
+            StringBuilder stringBuilder = new StringBuilder($"El personaje {this.Name} tiene:\n");
+            stringBuilder.Append($"{AttackStat()} de ataque\n");
+            stringBuilder.Append($"{DefenseStat()} de defensa");
+            return stringBuilder.ToString();
         }
+
         public void Attack(Enemy enemy)
         {
-            if (enemy.Alive)
+            if(enemy.Health > 0)
             {
-                double dmg=0; 
-                if (this.AttackStat()>=enemy.Defense)
+                double dmg = 0;
+                if(this.AttackStat() >= enemy.Defense)
                 {
-                    dmg = this.AttackStat()-enemy.Defense; 
+                    dmg = this.AttackStat() - enemy.Defense;
                 }
                 if(dmg < enemy.Health)
                 {
@@ -154,9 +161,8 @@ namespace Roleplay
                 else
                 {
                     enemy.Health = 0;
-                    enemy.Alive = false;
                 }
-                if(enemy.Alive)
+                if(enemy.Health > 0)
                 {
                     Console.WriteLine($"El enemigo sufrio {dmg} de daño, vida restante {enemy.Health}");
                 }
@@ -171,21 +177,10 @@ namespace Roleplay
             }
         }
 
-        /*
-        public void HealDwaft(Dwarf enano)
-        {
-            enano.Health = enano.MaxHealth;
-        }
-
-        public void HealPaladin(Paladin paladin)
-        {
-            paladin.Health = paladin.MaxHealth;
-        }
-        */
-
         public void Heal()
         {
             this.Health = this.MaxHealth;
+            Console.WriteLine($"Tu vida ahora es {this.MaxHealth}");
         }
     }
 }

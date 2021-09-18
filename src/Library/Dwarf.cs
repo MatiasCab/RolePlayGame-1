@@ -20,7 +20,6 @@ namespace Roleplay
             this.Strength = strength;
             this.Defense = defense;
             this.Health = health;
-            this.MaxHealth = MaxHealth;
             this.inventory = new ArrayList();
         }
 
@@ -174,7 +173,5 @@ namespace Roleplay
                 Console.WriteLine("Ese enemigo ya está muerto");
             }
         }
-
-        public 
     }
 }
