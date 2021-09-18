@@ -108,13 +108,7 @@ namespace Roleplay
 
         public void RemoveItem(Item item)
         {
-            foreach (Item i in this.Inventory)
-            {
-                if(i.Equals(item))
-                {
-                    this.Inventory.Remove(i);
-                }
-            }
+                    this.Inventory.Remove(item);
         }
 
         public double AttackStat()
