@@ -117,13 +117,7 @@ namespace Roleplay
 
         public void RemoveItem(dynamic item)
         {
-            foreach (dynamic i in this.Inventory)
-            {
-                if(i.Equals(item))
-                {
-                this.Inventory.Remove(i);
-                }
-            }
+                this.Inventory.Remove(item);
         }
         
 
@@ -133,7 +127,7 @@ namespace Roleplay
             int spells = 0;
             foreach (dynamic item in this.Inventory)
             {
-                if (item.GetType==Type.GetType("Object.SpellBook"))
+                if (item.GetType()==Type.GetType("Roleplay.SpellBook"))
                 {
                     spells=item.NumberOfSpells();
                 }
@@ -149,7 +143,7 @@ namespace Roleplay
             int spells=0;
             foreach (dynamic item in this.Inventory)
             {
-                if (item.GetType==Type.GetType("Object.SpellBook"))
+                if (item.GetType()==Type.GetType("Roleplay.SpellBook"))
                 {
                     spells=item.NumberOfSpells();
                 }

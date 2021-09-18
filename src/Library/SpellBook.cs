@@ -12,7 +12,7 @@ namespace Roleplay
         private double attackStat;
         private double defenseStat;
         private double mana;
-        private string restriction;
+        private string restriction = "Wizard";
         private ArrayList spells;
 
         public SpellBook(string name, double attackStat, double defenseStat, double mana)
@@ -22,7 +22,6 @@ namespace Roleplay
             this.DefenseStat = defenseStat;
             this.Mana = mana;
             this.Spells = new ArrayList();
-            this.Restriction ="Wizard";
         }
 
         public string Name
@@ -73,11 +72,7 @@ namespace Roleplay
         {
             get
             {
-                return this.Restriction;
-            }
-            set 
-            {
-                this.restriction=value;
+                return this.restriction;
             }
         }
 
@@ -103,14 +98,14 @@ namespace Roleplay
 
         public void RemoveSpells(Spells spell)
         {
-            foreach (var item in this.spells)
+            if (this.Spells.Contains(spell))
             {
-                if (spell.Equals(item))
-                {
-                    this.spells.Remove(item);
-                    this.AttackStat -= spell.AttackStat;
-                    this.DefenseStat -= spell.DefenseStat;
-                }
+            this.Spells.Remove(spell);
+            this.AttackStat -= spell.AttackStat;
+            this.DefenseStat -= spell.DefenseStat;
+            }else
+            {
+                Console.WriteLine("El hechizo no exite en este libro");
             }
         }
         public int NumberOfSpells()

@@ -177,7 +177,7 @@ namespace Roleplay
             }
         }
 
-        public void Heal()
+        public void Heal()//Aca se cura elmelfo en base a su vida maxima, es una caracteristica propia del elfo por su raza
         {
             this.Health = this.MaxHealth;
             Console.WriteLine($"Tu vida ahora es {this.MaxHealth}");
