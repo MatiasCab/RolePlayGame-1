@@ -21,7 +21,7 @@ namespace Program
             Thread.Sleep(800);
             Console.WriteLine("Hola, Bienvenido a nuestro minijuego de simulador de batalla.");
             Thread.Sleep(6000);
-            Console.WriteLine("Inserte el numero de la clase con la que le gustaria jugar:\n1: Paladin\n2: Enano\n3:Cualquier otra cosa");
+            Console.WriteLine("Inserte el numero de la clase con la que le gustaria jugar:\n1: Paladin\n2: Enano\n3: Elfo");
             Thread.Sleep(3000);
             string eleccion = Console.ReadLine(); 
             
