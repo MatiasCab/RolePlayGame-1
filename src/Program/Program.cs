@@ -168,7 +168,7 @@ namespace Program
             
             if (eleccion == "2")
             {
-                Console.WriteLine("¿Como te gustaria que se llame tu paladin?");
+                Console.WriteLine("¿Como te gustaria que se llame tu enano?");
                 Thread.Sleep(3000);
                 nombrepersonaje = Console.ReadLine();
                 
