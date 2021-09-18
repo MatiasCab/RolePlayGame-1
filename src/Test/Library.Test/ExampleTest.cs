@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Test.Library
 {
 
-
+    [TestFixture]
     public class ExampleTest
     {
 
