@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections;
 
-namespace Program
+namespace Roleplay
 {
     /*Se hizo una clase spellbook, para el item del libro de hechizos,ya que este es un item especial que posee nuevas mecanicas y 
     caracteristicas*/

@@ -1,6 +1,6 @@
 using System;
 
-namespace Program
+namespace Roleplay
 {
     /*Se agrego una clase spara los hechizos, porque si se querian agregar nuevas mecanicas a los mismos
     solo se tenia que modficar esta clase, por lo que cumple el principio solid denresponsabilidad unica*/

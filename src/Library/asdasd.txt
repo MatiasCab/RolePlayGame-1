@@ -1,25 +1,20 @@
-using System;
-using System.Text;
-using System.Collections;
-
-namespace Roleplay
-{
-    public class Wizard
+public class Dwarf
     {
         private string id;
         private string name;
         private double strength;
         private double defense;
+        private double MaxHealth;
         private double health;
-        private double mana;
         private ArrayList inventory;
 
-        public Wizard(string name, double strength, double defense, double health, double mana)
+        public Dwarf(string name, double strength, double defense, double health)
         {
-            this.id = "Wizard";
+            this.id = "Dwarf";
             this.Name = name;
             this.Strength = strength;
             this.Defense = defense;
+            this.MaxHealth = health;
             this.Health = health;
             this.inventory = new ArrayList();
         }
@@ -78,17 +73,6 @@ namespace Roleplay
                 this.health=value;
             }
         }
-        public double Mana
-        {
-            get
-            {
-                return this.mana;
-            }
-            set
-            {
-                this.mana=value;
-            }
-        }
 
         public ArrayList Inventory
         {
@@ -102,7 +86,7 @@ namespace Roleplay
             }
         }
 
-        public void AddItem(dynamic item)
+        public void AddItem(Item item)
         {
             if(item.Restriction.Equals(this.ID) || item.Restriction.Equals(""))
             {
@@ -115,61 +99,44 @@ namespace Roleplay
             }
         }
 
-        public void RemoveItem(dynamic item)
+        public void RemoveItem(Item item)
         {
-            foreach (dynamic i in this.Inventory)
+            foreach (Item i in this.Inventory)
             {
                 if(i.Equals(item))
                 {
-                this.Inventory.Remove(i);
+                    this.Inventory.Remove(i);
                 }
             }
         }
-        
 
-        public double AttackStat()  // Aca obtengo el ataque total del mago(el base mas lo que aporta los items), para esto se siguio el patron expert(el mago es el que tiene toda la informacion) 
+        public double AttackStat()
         {
             double attackDamage = this.Strength;
-            int spells = 0;
-            foreach (dynamic item in this.Inventory)
+            foreach (Item item in this.Inventory)
             {
-                if (item.GetType==Type.GetType("Object.SpellBook"))
-                {
-                    spells=item.NumberOfSpells();
-                }
-                    attackDamage += item.AttackStat;
+                attackDamage += item.AttackStat;
             }
-            attackDamage *= spells;
             return attackDamage;
         }
 
-        public double DefenseStat()// Aca obtengo la defensa total del mago(el base mas lo que aporta los items), por el mismo patron
+        public double DefenseStat()
         {
-            double defense = this.Defense; 
-            int spells=0;
-            foreach (dynamic item in this.Inventory)
+            double defense = this.Defense;
+            foreach (Item item in this.Inventory)
             {
-                if (item.GetType==Type.GetType("Object.SpellBook"))
-                {
-                    spells=item.NumberOfSpells();
-                }
                 defense += item.DefenseStat;
             }
-            defense *= spells;
             return defense;
         }
 
-        public string ShowStats()//Se arma un texto con los stats de defensa y ataque del mago(se sigui el patron expert, el mago es el que conoce esta informacion)
+        public string ShowStats()
         {
             StringBuilder stringBuilder = new StringBuilder($"El personaje {this.Name} tiene:\n");
             stringBuilder.Append($"{AttackStat()} de ataque\n");
             stringBuilder.Append($"{DefenseStat()} de defensa");
             return stringBuilder.ToString();
         }
-
-/* Metodo para atacar a un enemigo, como es el mago el que conoce todas las caracteristicas necesarioas para atacar
-el es el responsable de hacer la accion de atacr, ademas, si se le quieren agregar mas caracteristicas a su modo de 
-ataque, solo se tendria que modificar esta parte del codigo */
 
         public void Attack(Enemy enemy)
         {
@@ -180,17 +147,9 @@ ataque, solo se tendria que modificar esta parte del codigo */
                 {
                     dmg = this.AttackStat() - enemy.Defense;
                 }
-                if(dmg < enemy.Health )
+                if(dmg < enemy.Health)
                 {
-                    if (this.Mana - 10 >= 0)
-                    {
                     enemy.Health -= dmg;
-                    this.Mana -= 10;
-                    }else
-                    {
-                        Console.WriteLine("Imposible atacar, mana insuficiente");
-                    }
-
                 }
                 else
                 {
@@ -210,5 +169,9 @@ ataque, solo se tendria que modificar esta parte del codigo */
                 Console.WriteLine("Ese enemigo ya está muerto");
             }
         }
+
+        public void Heal()
+        {
+            this.Health = this.MaxHealth;
+        }
     }
-}
